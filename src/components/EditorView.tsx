@@ -5,6 +5,10 @@ import { countWords } from '../utils/entry'
 
 type EditorViewProps = {
   draft: DraftEntry
+  errors: {
+    title: string
+    body: string
+  }
   selectedMood: Mood
   onDraftChange: (updater: (current: DraftEntry) => DraftEntry) => void
   onMoodChange: (mood: Mood) => void
@@ -13,6 +17,7 @@ type EditorViewProps = {
 
 export function EditorView({
   draft,
+  errors,
   selectedMood,
   onDraftChange,
   onMoodChange,
@@ -26,13 +31,22 @@ export function EditorView({
       </div>
 
       <form className="entry-form" onSubmit={onSubmit}>
-        <input
-          aria-label="Entry title"
-          className="title-input"
-          onChange={(event) => onDraftChange((current) => ({ ...current, title: event.target.value }))}
-          placeholder="A title for this moment"
-          value={draft.title}
-        />
+        <div className="field-group">
+          <input
+            aria-describedby={errors.title ? 'entry-title-error' : undefined}
+            aria-invalid={Boolean(errors.title)}
+            aria-label="Entry title"
+            className={`title-input ${errors.title ? 'invalid' : ''}`}
+            onChange={(event) => onDraftChange((current) => ({ ...current, title: event.target.value }))}
+            placeholder="A title for this moment"
+            value={draft.title}
+          />
+          {errors.title && (
+            <p className="field-error" id="entry-title-error">
+              {errors.title}
+            </p>
+          )}
+        </div>
 
         <div className="editor-meta">
           <label>
@@ -58,12 +72,22 @@ export function EditorView({
           </div>
         </div>
 
-        <textarea
-          aria-label="Diary body"
-          onChange={(event) => onDraftChange((current) => ({ ...current, body: event.target.value }))}
-          placeholder="Begin with one true sentence..."
-          value={draft.body}
-        />
+        <div className="field-group">
+          <textarea
+            aria-describedby={errors.body ? 'entry-body-error' : undefined}
+            aria-invalid={Boolean(errors.body)}
+            aria-label="Diary body"
+            className={errors.body ? 'invalid' : ''}
+            onChange={(event) => onDraftChange((current) => ({ ...current, body: event.target.value }))}
+            placeholder="Begin with one true sentence..."
+            value={draft.body}
+          />
+          {errors.body && (
+            <p className="field-error" id="entry-body-error">
+              {errors.body}
+            </p>
+          )}
+        </div>
 
         <div className="editor-actions">
           <span>{countWords(draft.body)} words</span>

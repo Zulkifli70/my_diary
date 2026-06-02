@@ -516,6 +516,11 @@ button {
   max-width: 800px;
 }
 
+.field-group {
+  display: grid;
+  gap: 8px;
+}
+
 .title-input {
   width: 100%;
   padding: 0 0 16px;
@@ -537,6 +542,22 @@ textarea:focus,
 .editor-meta input:focus {
   outline: 2px solid rgba(107, 126, 110, 0.24);
   outline-offset: 3px;
+}
+
+.title-input.invalid {
+  border-bottom-color: var(--error);
+}
+
+textarea.invalid {
+  outline: 2px solid rgba(186, 26, 26, 0.18);
+  outline-offset: 3px;
+}
+
+.field-error {
+  margin: 0;
+  color: var(--error);
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .editor-meta {

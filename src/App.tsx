@@ -17,6 +17,11 @@ const initialDraft: DraftEntry = {
   body: '',
 }
 
+const initialDraftErrors = {
+  title: '',
+  body: '',
+}
+
 function App() {
   const [entries, setEntries] = useLocalStorageState<DiaryEntry[]>(
     'quiet-moments-entries',
@@ -28,6 +33,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [moodFilter, setMoodFilter] = useState<MoodFilter>('All')
   const [draft, setDraft] = useState<DraftEntry>(initialDraft)
+  const [draftErrors, setDraftErrors] = useState(initialDraftErrors)
 
   const sortedEntries = useMemo(
     () => [...entries].sort((a, b) => b.date.localeCompare(a.date)),
@@ -51,7 +57,14 @@ function App() {
     const trimmedBody = draft.body.trim()
     const trimmedTitle = draft.title.trim()
 
-    if (!trimmedTitle || !trimmedBody) return
+    const nextErrors = {
+      title: trimmedTitle ? '' : 'Please add a title before saving.',
+      body: trimmedBody ? '' : 'Please write something in your entry first.',
+    }
+
+    setDraftErrors(nextErrors)
+
+    if (nextErrors.title || nextErrors.body) return
 
     const newEntry: DiaryEntry = {
       id: Date.now(),
@@ -63,9 +76,23 @@ function App() {
 
     setEntries((current) => [newEntry, ...current])
     setDraft(initialDraft)
+    setDraftErrors(initialDraftErrors)
     setSelectedMood('Serene')
     setSelectedDate(newEntry.date)
     setActiveView('timeline')
+  }
+
+  const updateDraft = (updater: (current: DraftEntry) => DraftEntry) => {
+    setDraft((current) => {
+      const nextDraft = updater(current)
+
+      setDraftErrors((currentErrors) => ({
+        title: nextDraft.title.trim() ? '' : currentErrors.title,
+        body: nextDraft.body.trim() ? '' : currentErrors.body,
+      }))
+
+      return nextDraft
+    })
   }
 
   return (
@@ -82,7 +109,7 @@ function App() {
           <CalendarView
             entries={entries}
             onDateSelect={setSelectedDate}
-            onDraftChange={setDraft}
+            onDraftChange={updateDraft}
             onViewChange={setActiveView}
             selectedDate={selectedDate}
             selectedEntry={selectedEntry}
@@ -94,7 +121,8 @@ function App() {
         {activeView === 'editor' && (
           <EditorView
             draft={draft}
-            onDraftChange={setDraft}
+            errors={draftErrors}
+            onDraftChange={updateDraft}
             onMoodChange={setSelectedMood}
             onSubmit={submitEntry}
             selectedMood={selectedMood}
