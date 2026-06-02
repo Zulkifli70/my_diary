@@ -2,7 +2,7 @@
 
 .app-shell {
   display: grid;
-  grid-template-columns: 184px minmax(0, 1fr);
+  grid-template-columns: 368px minmax(0, 1fr);
   min-height: 100svh;
   background:
     linear-gradient(rgba(249, 248, 244, 0.98), rgba(249, 248, 244, 0.98)),
@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   height: 100svh;
-  padding: 22px 12px;
+  padding: 32px 24px;
   background: #f6f5f0;
   border-right: 1px solid rgba(67, 72, 67, 0.22);
 }
@@ -51,12 +51,12 @@
 
 .sidebar-top {
   display: grid;
-  gap: 18px;
+  gap: 24px;
 }
 
 .profile-block {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   align-items: center;
   min-width: 0;
 }
@@ -74,27 +74,27 @@
   display: block;
   color: var(--ink);
   font-family: var(--entry-font);
-  font-size: 14px;
+  font-size: 22px;
   font-weight: 500;
-  line-height: 17px;
+  line-height: 28px;
   white-space: nowrap;
 }
 
 .profile-block span {
   display: block;
   color: var(--muted-strong);
-  font-size: 9px;
-  line-height: 12px;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 .new-entry-button {
   width: 100%;
-  min-height: 34px;
+  min-height: 48px;
   border: 0;
   border-radius: 4px;
   background: #4d604f;
   color: #fffdf8;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
   transition:
     background 180ms ease,
@@ -107,8 +107,8 @@
 
 .nav-tabs {
   display: grid;
-  gap: 8px;
-  margin: 58px 0 0;
+  gap: 12px;
+  margin: 76px 0 0;
 }
 
 button,
@@ -137,15 +137,15 @@ button {
 
 .nav-tabs button {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   align-items: center;
   border: 1px solid transparent;
   background: transparent;
   color: #2f362f;
   text-align: left;
-  min-height: 34px;
-  padding: 8px 10px;
-  font-size: 12px;
+  min-height: 46px;
+  padding: 10px 14px;
+  font-size: 15px;
 }
 
 .nav-tabs button:hover,
@@ -156,8 +156,8 @@ button {
 }
 
 .nav-tabs svg {
-  width: 16px;
-  height: 16px;
+  width: 19px;
+  height: 19px;
   stroke-width: 1.75;
 }
 
