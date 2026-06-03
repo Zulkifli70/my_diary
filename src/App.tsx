@@ -5,7 +5,7 @@ import { EditorView } from './components/EditorView'
 import { EntryDetailView } from './components/EntryDetailView'
 import { Sidebar } from './components/Sidebar'
 import { TimelineView } from './components/TimelineView'
-import { starterEntries, todayIso } from './data/diary'
+import { todayIso } from './data/diary'
 import { useLocalStorageState } from './hooks/useLocalStorageState'
 import type { DiaryEntry, DraftEntry, Mood, MoodFilter, View } from './types/diary'
 import { calculateStreak, countWords } from './utils/entry'
@@ -24,8 +24,8 @@ const initialDraftErrors = {
 
 function App() {
   const [entries, setEntries] = useLocalStorageState<DiaryEntry[]>(
-    'quiet-moments-entries-v2',
-    starterEntries,
+    'quiet-moments-entries-v3',
+    [],
   )
   const [activeView, setActiveView] = useState<View>('calendar')
   const [selectedDate, setSelectedDate] = useState(todayIso)
@@ -205,6 +205,7 @@ function App() {
             entries={filteredEntries}
             moodFilter={moodFilter}
             onMoodFilterChange={setMoodFilter}
+            onCreateEntry={() => setActiveView('editor')}
             onReadEntry={readEntry}
             onSearchQueryChange={setSearchQuery}
             searchQuery={searchQuery}

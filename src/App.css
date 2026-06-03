@@ -105,6 +105,25 @@
   background: #405342;
 }
 
+.new-entry-button-2 {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 4px;
+  background: #4d604f;
+  color: #fffdf8;
+  font-size: 15px;
+  font-weight: 500;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.new-entry-button-2:hover {
+  background: #405342;
+  color: white;
+}
+
 .nav-tabs {
   display: grid;
   gap: 12px;
@@ -648,6 +667,56 @@ textarea {
   gap: 36px;
 }
 
+.timeline-empty-state {
+  display: grid;
+  place-items: center;
+  gap: 44px;
+  width: 100%;
+  min-height: 520px;
+  padding: 72px 32px;
+  border: 2px solid rgba(160, 160, 160, 0.9);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.34);
+  color: var(--ink);
+  font-family: var(--entry-font);
+  font-size: clamp(34px, 6vw, 48px);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-align: center;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+/* .timeline-empty-state:hover {
+  border-color: var(--primary-dark);
+  background: rgba(255, 255, 255, 0.52);
+  transform: translateY(-1px);
+} */
+
+.timeline-empty-state:focus-visible {
+  outline: 3px solid rgba(107, 126, 110, 0.3);
+  outline-offset: 4px;
+}
+
+.timeline-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 180px;
+  height: 136px;
+  border: 2px solid rgba(45, 51, 46, 0.9);
+  border-radius: 12px;
+  background: rgba(250, 249, 246, 0.72);
+}
+
+.timeline-empty-icon svg {
+  width: 62px;
+  height: 62px;
+  stroke-width: 1.5;
+}
+
 .timeline-day {
   display: grid;
   gap: 24px;
@@ -723,6 +792,19 @@ textarea {
 
 .timeline-entry-actions {
   justify-content: space-between;
+}
+
+.timeline-empty-image {
+  width: 3em;
+}
+
+.timeline-empty-button {
+  width: 50%;
+  min-width: 30%;
+}
+
+.timeline-empty-para {
+  font-size: 0.5em;
 }
 
 .journal-link-button,
@@ -885,8 +967,19 @@ mark {
   }
 
   .quick-read,
-  .timeline-entry {
+  .timeline-entry,
+  .timeline-empty-state {
     padding: 20px;
+  }
+
+  .timeline-empty-state {
+    min-height: 360px;
+    gap: 28px;
+  }
+
+  .timeline-empty-icon {
+    width: 132px;
+    height: 104px;
   }
 
   .editor-actions {

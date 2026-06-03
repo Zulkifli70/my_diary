@@ -123,7 +123,10 @@ export function CalendarView({
                     {selectedEntryWords} words
                   </span>
                 </div>
-                <button onClick={() => onReadEntry(selectedEntry)} type="button">
+                <button
+                  onClick={() => onReadEntry(selectedEntry)}
+                  type="button"
+                >
                   Open this page
                 </button>
               </>
@@ -135,6 +138,7 @@ export function CalendarView({
                   leave a note here.
                 </p>
                 <button
+                  className="new-entry-button-2"
                   onClick={() => {
                     onDraftChange((current) => ({
                       ...current,
