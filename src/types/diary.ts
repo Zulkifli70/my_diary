@@ -17,4 +17,4 @@ export type DraftEntry = {
 
 export type MoodFilter = 'All' | Mood
 
-export type View = 'calendar' | 'editor' | 'timeline' | 'search'
+export type View = 'calendar' | 'editor' | 'timeline' | 'detail'

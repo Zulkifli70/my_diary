@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import { CalendarView } from './components/CalendarView'
 import { EditorView } from './components/EditorView'
-import { SearchView } from './components/SearchView'
+import { EntryDetailView } from './components/EntryDetailView'
 import { Sidebar } from './components/Sidebar'
 import { TimelineView } from './components/TimelineView'
 import { starterEntries, todayIso } from './data/diary'
@@ -30,6 +30,8 @@ function App() {
   const [activeView, setActiveView] = useState<View>('calendar')
   const [selectedDate, setSelectedDate] = useState(todayIso)
   const [selectedMood, setSelectedMood] = useState<Mood>('Serene')
+  const [selectedEntryId, setSelectedEntryId] = useState<number | null>(null)
+  const [editingEntryId, setEditingEntryId] = useState<number | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [moodFilter, setMoodFilter] = useState<MoodFilter>('All')
   const [draft, setDraft] = useState<DraftEntry>(initialDraft)
@@ -41,6 +43,7 @@ function App() {
   )
 
   const selectedEntry = sortedEntries.find((entry) => entry.date === selectedDate)
+  const detailEntry = sortedEntries.find((entry) => entry.id === selectedEntryId)
   const totalWords = entries.reduce((total, entry) => total + countWords(entry.body), 0)
   const streak = useMemo(() => calculateStreak(entries, todayIso), [entries])
 
@@ -66,20 +69,41 @@ function App() {
 
     if (nextErrors.title || nextErrors.body) return
 
-    const newEntry: DiaryEntry = {
-      id: Date.now(),
-      title: trimmedTitle,
-      date: draft.date,
-      mood: selectedMood,
-      body: trimmedBody,
+    if (editingEntryId) {
+      setEntries((current) =>
+        current.map((entry) =>
+          entry.id === editingEntryId
+            ? {
+                ...entry,
+                title: trimmedTitle,
+                date: draft.date,
+                mood: selectedMood,
+                body: trimmedBody,
+              }
+            : entry,
+        ),
+      )
+      setSelectedEntryId(editingEntryId)
+      setEditingEntryId(null)
+      setActiveView('detail')
+    } else {
+      const newEntry: DiaryEntry = {
+        id: Date.now(),
+        title: trimmedTitle,
+        date: draft.date,
+        mood: selectedMood,
+        body: trimmedBody,
+      }
+
+      setEntries((current) => [newEntry, ...current])
+      setSelectedEntryId(newEntry.id)
+      setSelectedDate(newEntry.date)
+      setActiveView('detail')
     }
 
-    setEntries((current) => [newEntry, ...current])
     setDraft(initialDraft)
     setDraftErrors(initialDraftErrors)
     setSelectedMood('Serene')
-    setSelectedDate(newEntry.date)
-    setActiveView('timeline')
   }
 
   const updateDraft = (updater: (current: DraftEntry) => DraftEntry) => {
@@ -93,6 +117,50 @@ function App() {
 
       return nextDraft
     })
+  }
+
+  const readEntry = (entry: DiaryEntry) => {
+    setSelectedEntryId(entry.id)
+    setSelectedDate(entry.date)
+    setActiveView('detail')
+  }
+
+  const editEntry = (entry: DiaryEntry) => {
+    setEditingEntryId(entry.id)
+    setDraft({
+      title: entry.title,
+      date: entry.date,
+      body: entry.body,
+    })
+    setDraftErrors(initialDraftErrors)
+    setSelectedMood(entry.mood)
+    setSelectedEntryId(entry.id)
+    setActiveView('editor')
+  }
+
+  const cancelEdit = () => {
+    setEditingEntryId(null)
+    setDraft(initialDraft)
+    setDraftErrors(initialDraftErrors)
+    setSelectedMood('Serene')
+    setActiveView(selectedEntryId ? 'detail' : 'timeline')
+  }
+
+  const deleteEntry = (entryId: number) => {
+    const shouldDelete = window.confirm('Delete this journal entry?')
+
+    if (!shouldDelete) return
+
+    setEntries((current) => current.filter((entry) => entry.id !== entryId))
+
+    if (selectedEntryId === entryId) {
+      setSelectedEntryId(null)
+      setActiveView('timeline')
+    }
+
+    if (editingEntryId === entryId) {
+      cancelEdit()
+    }
   }
 
   return (
@@ -110,6 +178,7 @@ function App() {
             entries={entries}
             onDateSelect={setSelectedDate}
             onDraftChange={updateDraft}
+            onReadEntry={readEntry}
             onViewChange={setActiveView}
             selectedDate={selectedDate}
             selectedEntry={selectedEntry}
@@ -122,6 +191,8 @@ function App() {
           <EditorView
             draft={draft}
             errors={draftErrors}
+            isEditing={Boolean(editingEntryId)}
+            onCancelEdit={cancelEdit}
             onDraftChange={updateDraft}
             onMoodChange={setSelectedMood}
             onSubmit={submitEntry}
@@ -129,15 +200,25 @@ function App() {
           />
         )}
 
-        {activeView === 'timeline' && <TimelineView entries={sortedEntries} />}
-
-        {activeView === 'search' && (
-          <SearchView
+        {activeView === 'timeline' && (
+          <TimelineView
             entries={filteredEntries}
             moodFilter={moodFilter}
+            onDeleteEntry={deleteEntry}
+            onEditEntry={editEntry}
             onMoodFilterChange={setMoodFilter}
+            onReadEntry={readEntry}
             onSearchQueryChange={setSearchQuery}
             searchQuery={searchQuery}
+          />
+        )}
+
+        {activeView === 'detail' && detailEntry && (
+          <EntryDetailView
+            entry={detailEntry}
+            onBack={() => setActiveView('timeline')}
+            onDeleteEntry={deleteEntry}
+            onEditEntry={editEntry}
           />
         )}
       </section>

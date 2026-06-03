@@ -3,7 +3,6 @@ import {
   LuBookOpen,
   LuCalendarDays,
   LuClock3,
-  LuSearch,
 } from "react-icons/lu";
 
 type SidebarProps = {
@@ -21,7 +20,6 @@ const navItems: Array<{
   { view: "editor", label: "Journal", icon: LuBookOpen },
   { view: "calendar", label: "Calendar", icon: LuCalendarDays },
   { view: "timeline", label: "Timeline", icon: LuClock3 },
-  { view: "search", label: "Search", icon: LuSearch },
 ];
 
 export function Sidebar({ activeView, onViewChange }: SidebarProps) {

@@ -12,6 +12,7 @@ type CalendarViewProps = {
   totalWords: number;
   onDateSelect: (date: string) => void;
   onDraftChange: (updater: (current: DraftEntry) => DraftEntry) => void;
+  onReadEntry: (entry: DiaryEntry) => void;
   onViewChange: (view: View) => void;
 };
 
@@ -23,6 +24,7 @@ export function CalendarView({
   totalWords,
   onDateSelect,
   onDraftChange,
+  onReadEntry,
   onViewChange,
 }: CalendarViewProps) {
   const calendarDays = getCalendarDays(selectedDate);
@@ -121,7 +123,7 @@ export function CalendarView({
                     {selectedEntryWords} words
                   </span>
                 </div>
-                <button onClick={() => onViewChange("timeline")} type="button">
+                <button onClick={() => onReadEntry(selectedEntry)} type="button">
                   Read Full Entry
                 </button>
               </>

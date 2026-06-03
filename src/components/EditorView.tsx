@@ -10,6 +10,8 @@ type EditorViewProps = {
     body: string
   }
   selectedMood: Mood
+  isEditing?: boolean
+  onCancelEdit?: () => void
   onDraftChange: (updater: (current: DraftEntry) => DraftEntry) => void
   onMoodChange: (mood: Mood) => void
   onSubmit: (event: FormEvent<HTMLFormElement>) => void
@@ -19,6 +21,8 @@ export function EditorView({
   draft,
   errors,
   selectedMood,
+  isEditing = false,
+  onCancelEdit,
   onDraftChange,
   onMoodChange,
   onSubmit,
@@ -27,7 +31,7 @@ export function EditorView({
     <section className="panel editor-view" aria-labelledby="editor-title">
       <div className="section-heading">
         <p className="eyebrow">Distraction-free editor</p>
-        <h2 id="editor-title">Let the page stay quiet.</h2>
+        <h2 id="editor-title">{isEditing ? 'Refine this entry.' : 'Let the page stay quiet.'}</h2>
       </div>
 
       <form className="entry-form" onSubmit={onSubmit}>
@@ -91,8 +95,13 @@ export function EditorView({
 
         <div className="editor-actions">
           <span>{countWords(draft.body)} words</span>
+          {isEditing && onCancelEdit && (
+            <button className="secondary-button" onClick={onCancelEdit} type="button">
+              Cancel
+            </button>
+          )}
           <button className="primary-button" type="submit">
-            Save entry
+            {isEditing ? 'Update entry' : 'Save entry'}
           </button>
         </div>
       </form>
