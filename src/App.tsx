@@ -24,7 +24,7 @@ const initialDraftErrors = {
 
 function App() {
   const [entries, setEntries] = useLocalStorageState<DiaryEntry[]>(
-    'quiet-moments-entries',
+    'quiet-moments-entries-v2',
     starterEntries,
   )
   const [activeView, setActiveView] = useState<View>('calendar')

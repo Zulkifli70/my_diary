@@ -16,7 +16,10 @@ export function TimelineView({ entries }: TimelineViewProps) {
 
       <div className="timeline-list">
         {entries.map((entry) => (
-          <article className="timeline-entry" key={entry.id}>
+          <article
+            className={`timeline-entry ${entry.image ? '' : 'without-image'}`}
+            key={entry.id}
+          >
             {entry.image && <img alt="" src={entry.image} />}
             <div>
               <span className="date-label">{formatLongDate(entry.date)}</span>

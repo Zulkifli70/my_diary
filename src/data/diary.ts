@@ -1,40 +1,40 @@
 import type { DiaryEntry, Mood } from '../types/diary'
 
-export const todayIso = '2026-06-02'
+export const todayIso = '2026-06-03'
 
 export const moods: Mood[] = ['Serene', 'Reflective', 'Grateful', 'Tender', 'Hopeful']
 
 export const starterEntries: DiaryEntry[] = [
   {
     id: 1,
-    title: 'A quieter morning',
-    date: '2026-06-02',
-    mood: 'Serene',
-    body: 'The apartment felt calm before the day began. I made tea, opened the window, and let the slow air remind me that I do not have to rush every thought into shape.',
+    title: 'Fresh page, steady pace',
+    date: '2026-06-03',
+    mood: 'Hopeful',
+    body: 'I started the morning by clearing the desk, making a short list, and choosing one thing worth finishing well. The day feels lighter when it has a simple shape.',
     image:
-      'https://images.unsplash.com/photo-1499728603263-13726abce5fd?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: 2,
-    title: 'Small kindnesses',
-    date: '2026-06-01',
-    mood: 'Grateful',
-    body: 'Someone held the door while my hands were full. It was brief, almost invisible, but the gesture stayed with me longer than I expected.',
+    title: 'Little reset',
+    date: '2026-06-02',
+    mood: 'Serene',
+    body: 'After lunch I stepped away from the screen, washed a cup, and let the quiet room settle around me. It was not dramatic, just enough to return with a clearer head.',
   },
   {
     id: 3,
-    title: 'Evening inventory',
-    date: '2026-05-29',
+    title: 'Notes after rain',
+    date: '2026-06-01',
     mood: 'Reflective',
-    body: 'I noticed how much easier it is to name what went wrong than what was steady. Tonight I am practicing the opposite: warm food, clean sheets, one finished task.',
+    body: 'The street looked newly washed this evening. I wrote down what I want to carry forward this week: patience, cleaner boundaries, and a habit of noticing small progress.',
     image:
-      'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: 4,
-    title: 'A soft return',
-    date: '2026-05-25',
-    mood: 'Hopeful',
-    body: 'The plan is simple: write a little, walk a little, answer one message I have been avoiding. Small doors still count as doors.',
+    title: 'Kind reminder',
+    date: '2026-05-31',
+    mood: 'Grateful',
+    body: 'I found an old note tucked inside a book and it made me smile. Some encouragement arrives late and still lands exactly where it needs to.',
   },
 ]
