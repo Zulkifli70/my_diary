@@ -38,7 +38,7 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
           onClick={() => onViewChange("editor")}
           type="button"
         >
-          New Entry
+          Write a Page
         </button>
       </div>
 

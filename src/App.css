@@ -645,7 +645,40 @@ textarea {
 
 .timeline-list {
   display: grid;
+  gap: 36px;
+}
+
+.timeline-day {
+  display: grid;
   gap: 24px;
+}
+
+.timeline-day-label {
+  display: grid;
+  grid-template-columns: minmax(48px, 1fr) auto minmax(48px, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.timeline-day-label::before,
+.timeline-day-label::after {
+  content: "";
+  height: 1px;
+  background: rgba(217, 197, 178, 0.8);
+}
+
+.timeline-day-label span {
+  color: var(--muted);
+  font-family: var(--ui-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.timeline-day-entries {
+  display: grid;
+  gap: 20px;
 }
 
 .timeline-entry {
@@ -686,6 +719,34 @@ textarea {
   min-height: 32px;
   padding: 6px 12px;
   font-size: 13px;
+}
+
+.timeline-entry-actions {
+  justify-content: space-between;
+}
+
+.journal-link-button,
+.danger-link-button {
+  border-color: rgba(107, 126, 110, 0.28);
+  background: rgba(246, 245, 240, 0.76);
+  color: var(--primary-dark);
+}
+
+.journal-link-button:hover {
+  border-color: rgba(107, 126, 110, 0.5);
+  background: var(--primary-fixed);
+  color: #405342;
+}
+
+.danger-link-button {
+  border-color: rgba(168, 111, 96, 0.28);
+  color: #8c4d41;
+}
+
+.danger-link-button:hover {
+  border-color: rgba(168, 111, 96, 0.5);
+  background: #f4dfcb;
+  color: #713b32;
 }
 
 .mood-chip {

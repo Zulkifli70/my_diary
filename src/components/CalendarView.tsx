@@ -124,7 +124,7 @@ export function CalendarView({
                   </span>
                 </div>
                 <button onClick={() => onReadEntry(selectedEntry)} type="button">
-                  Read Full Entry
+                  Open this page
                 </button>
               </>
             ) : (

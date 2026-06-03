@@ -204,8 +204,6 @@ function App() {
           <TimelineView
             entries={filteredEntries}
             moodFilter={moodFilter}
-            onDeleteEntry={deleteEntry}
-            onEditEntry={editEntry}
             onMoodFilterChange={setMoodFilter}
             onReadEntry={readEntry}
             onSearchQueryChange={setSearchQuery}

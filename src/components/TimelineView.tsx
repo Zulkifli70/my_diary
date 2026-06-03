@@ -8,23 +8,58 @@ type TimelineViewProps = {
   entries: DiaryEntry[]
   moodFilter: MoodFilter
   searchQuery: string
-  onDeleteEntry: (entryId: number) => void
-  onEditEntry: (entry: DiaryEntry) => void
   onMoodFilterChange: (mood: MoodFilter) => void
   onReadEntry: (entry: DiaryEntry) => void
   onSearchQueryChange: (query: string) => void
+}
+
+const formatTimelineGroupLabel = (date: string) => {
+  const entryDate = new Date(`${date}T12:00:00`)
+  const today = new Date()
+  const yesterday = new Date()
+  yesterday.setDate(today.getDate() - 1)
+
+  const toLocalIsoDate = (value: Date) => {
+    const year = value.getFullYear()
+    const month = `${value.getMonth() + 1}`.padStart(2, '0')
+    const day = `${value.getDate()}`.padStart(2, '0')
+
+    return `${year}-${month}-${day}`
+  }
+
+  if (date === toLocalIsoDate(today)) return 'Today'
+  if (date === toLocalIsoDate(yesterday)) return 'Yesterday'
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'long',
+    day: 'numeric',
+    year: entryDate.getFullYear() === today.getFullYear() ? undefined : 'numeric',
+  }).format(entryDate)
 }
 
 export function TimelineView({
   entries,
   moodFilter,
   searchQuery,
-  onDeleteEntry,
-  onEditEntry,
   onMoodFilterChange,
   onReadEntry,
   onSearchQueryChange,
 }: TimelineViewProps) {
+  const groupedEntries = entries.reduce<Array<{ date: string; entries: DiaryEntry[] }>>(
+    (groups, entry) => {
+      const currentGroup = groups.at(-1)
+
+      if (currentGroup?.date === entry.date) {
+        currentGroup.entries.push(entry)
+      } else {
+        groups.push({ date: entry.date, entries: [entry] })
+      }
+
+      return groups
+    },
+    [],
+  )
+
   return (
     <section className="panel timeline-view" aria-labelledby="timeline-title">
       <div className="section-heading">
@@ -54,30 +89,36 @@ export function TimelineView({
       </div>
 
       <div className="timeline-list">
-        {entries.map((entry) => (
-          <article
-            className={`timeline-entry ${entry.image ? '' : 'without-image'}`.trim()}
-            key={entry.id}
-          >
-            {entry.image && <img alt="" src={entry.image} />}
-            <div>
-              <span className="date-label">{formatLongDate(entry.date)}</span>
-              <h3>{highlightMatch(entry.title, searchQuery)}</h3>
-              <p>{highlightMatch(getEntrySummary(entry.body), searchQuery)}</p>
-              <div className="entry-actions">
-                <span className={`mood-chip ${entry.mood.toLowerCase()}`}>{entry.mood}</span>
-                <button onClick={() => onReadEntry(entry)} type="button">
-                  Read more
-                </button>
-                <button onClick={() => onEditEntry(entry)} type="button">
-                  Edit
-                </button>
-                <button onClick={() => onDeleteEntry(entry.id)} type="button">
-                  Delete
-                </button>
-              </div>
+        {groupedEntries.map((group) => (
+          <section className="timeline-day" key={group.date} aria-label={formatLongDate(group.date)}>
+            <div className="timeline-day-label">
+              <span>{formatTimelineGroupLabel(group.date)}</span>
             </div>
-          </article>
+
+            <div className="timeline-day-entries">
+              {group.entries.map((entry) => (
+                <article
+                  className={`timeline-entry ${entry.image ? '' : 'without-image'}`.trim()}
+                  key={entry.id}
+                >
+                  {entry.image && <img alt="" src={entry.image} />}
+                  <div>
+                    <span className="date-label">{formatLongDate(entry.date)}</span>
+                    <h3>{highlightMatch(entry.title, searchQuery)}</h3>
+                    <p>{highlightMatch(getEntrySummary(entry.body), searchQuery)}</p>
+                    <div className="entry-actions timeline-entry-actions">
+                      <span className={`mood-chip ${entry.mood.toLowerCase()}`}>
+                        {entry.mood}
+                      </span>
+                      <button className="journal-link-button" onClick={() => onReadEntry(entry)} type="button">
+                        Open page
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
         ))}
       </div>
     </section>

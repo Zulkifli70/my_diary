@@ -18,7 +18,7 @@ export const formatMonthYear = (date: string) =>
     year: 'numeric',
   }).format(new Date(`${date}T12:00:00`))
 
-const toLocalIsoDate = (date: Date) => {
+export const toLocalIsoDate = (date: Date) => {
   const year = date.getFullYear()
   const month = `${date.getMonth() + 1}`.padStart(2, '0')
   const day = `${date.getDate()}`.padStart(2, '0')

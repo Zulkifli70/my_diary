@@ -18,7 +18,7 @@ export function EntryDetailView({
   return (
     <section className="panel entry-detail-view" aria-labelledby="entry-detail-title">
       <button className="text-button" onClick={onBack} type="button">
-        Back
+        Back to timeline
       </button>
 
       <article className="entry-detail">
@@ -30,12 +30,12 @@ export function EntryDetailView({
           <span className="mood-chip neutral">{countWords(entry.body)} words</span>
         </div>
         <p>{entry.body}</p>
-        <div className="entry-actions">
-          <button onClick={() => onEditEntry(entry)} type="button">
-            Edit
+        <div className="entry-actions detail-actions">
+          <button className="journal-link-button" onClick={() => onEditEntry(entry)} type="button">
+            Revise page
           </button>
-          <button onClick={() => onDeleteEntry(entry.id)} type="button">
-            Delete
+          <button className="danger-link-button" onClick={() => onDeleteEntry(entry.id)} type="button">
+            Remove page
           </button>
         </div>
       </article>
