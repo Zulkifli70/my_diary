@@ -458,6 +458,17 @@ button {
   box-shadow: 0 8px 32px rgba(107, 126, 110, 0.12);
 }
 
+.back-button {
+  background-color: #4d604f;
+  padding: 10px 18px;
+  border-radius: 5px;
+  color: white;
+}
+
+.back-button:hover {
+  background-color: #405342;
+}
+
 .quick-read button {
   width: 100%;
   background: transparent;
