@@ -209,6 +209,7 @@ function App() {
             onReadEntry={readEntry}
             onSearchQueryChange={setSearchQuery}
             searchQuery={searchQuery}
+            totalEntries={sortedEntries.length}
           />
         )}
 

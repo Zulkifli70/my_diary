@@ -6,6 +6,7 @@ import type { MoodFilter } from "../types/diary";
 
 type TimelineViewProps = {
   entries: DiaryEntry[];
+  totalEntries: number;
   moodFilter: MoodFilter;
   searchQuery: string;
   onMoodFilterChange: (mood: MoodFilter) => void;
@@ -41,6 +42,7 @@ const formatTimelineGroupLabel = (date: string) => {
 
 export function TimelineView({
   entries,
+  totalEntries,
   moodFilter,
   searchQuery,
   onCreateEntry,
@@ -48,6 +50,11 @@ export function TimelineView({
   onReadEntry,
   onSearchQueryChange,
 }: TimelineViewProps) {
+  const hasSearchQuery = Boolean(searchQuery.trim());
+  const hasActiveFilter = hasSearchQuery || moodFilter !== "All";
+  const hasNoSearchResults =
+    totalEntries > 0 && hasActiveFilter && entries.length === 0;
+
   const groupedEntries = entries.reduce<
     Array<{ date: string; entries: DiaryEntry[] }>
   >((groups, entry) => {
@@ -92,7 +99,19 @@ export function TimelineView({
         </select>
       </div>
 
-      {groupedEntries.length === 0 ? (
+      {hasNoSearchResults ? (
+        <div className="timeline-empty-state timeline-search-empty-state">
+          <img
+            className="timeline-empty-image"
+            src="/book.png"
+            alt="book icon"
+          />
+          <h2>No Result Found.</h2>
+          <p className="timeline-empty-para">
+            Try using different words or changing the mood filter.
+          </p>
+        </div>
+      ) : groupedEntries.length === 0 ? (
         <div className="timeline-empty-state">
           <img
             className="timeline-empty-image"
