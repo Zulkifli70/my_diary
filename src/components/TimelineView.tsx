@@ -96,7 +96,7 @@ export function TimelineView({
         <div className="timeline-empty-state">
           <img
             className="timeline-empty-image"
-            src="../public/book.png"
+            src="/book.png"
             alt="book icon"
           />
           <h2>Your Story Begin Here</h2>
