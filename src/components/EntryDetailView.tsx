@@ -1,6 +1,7 @@
 import type { DiaryEntry } from "../types/diary";
 import { formatLongDate } from "../utils/date";
 import { countWords } from "../utils/entry";
+import { GoArrowLeft } from "react-icons/go";
 
 type EntryDetailViewProps = {
   entry: DiaryEntry;
@@ -21,7 +22,9 @@ export function EntryDetailView({
       aria-labelledby="entry-detail-title"
     >
       <button className="back-button" onClick={onBack} type="button">
-        Back to timeline
+        <span className="back-button-div">
+          <GoArrowLeft /> Back to timeline
+        </span>
       </button>
 
       <article className="entry-detail">
