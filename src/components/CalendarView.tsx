@@ -133,10 +133,7 @@ export function CalendarView({
             ) : (
               <>
                 <h3>No entry yet</h3>
-                <p>
-                  This day is still blank. Open the editor when you are ready to
-                  leave a note here.
-                </p>
+                <p>This day is still blank. Write your story this day.</p>
                 <button
                   className="new-entry-button-2"
                   onClick={() => {
