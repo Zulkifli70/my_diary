@@ -46,7 +46,7 @@ export function EntryDetailView({
             onClick={() => onEditEntry(entry)}
             type="button"
           >
-            Revise page
+            Edit page
           </button>
           <button
             className="danger-link-button"
