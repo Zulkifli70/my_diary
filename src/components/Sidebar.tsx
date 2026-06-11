@@ -1,9 +1,5 @@
 import type { View } from "../types/diary";
-import {
-  LuBookOpen,
-  LuCalendarDays,
-  LuClock3,
-} from "react-icons/lu";
+import { LuBookOpen, LuCalendarDays, LuClock3 } from "react-icons/lu";
 
 type SidebarProps = {
   activeView: View;
@@ -29,7 +25,7 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
         <div className="profile-block">
           <div>
             <strong>Quiet Moments</strong>
-            <span>Reflecting daily</span>
+            <span>Reflecting daily moments</span>
           </div>
         </div>
 
